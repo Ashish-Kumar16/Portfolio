@@ -57,7 +57,21 @@ scrollTopbtn.addEventListener("click", () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 });
-
+//aninmation
+document.addEventListener('DOMContentLoaded', function() {
+    var sentences = document.querySelectorAll('.typewriter');
+    var currentIndex = 0;
+  
+    function showNextSentence() {
+      sentences[currentIndex].style.display = 'none';
+      currentIndex = (currentIndex + 1) % sentences.length;
+      sentences[currentIndex].style.display = 'inline-block';
+      setTimeout(showNextSentence, 4000); // Change sentence every 4 seconds
+    }
+  
+    setTimeout(showNextSentence, 4000); // Start the animation
+  });
+  
 //Navigation menu items active on page scroll
 window.addEventListener("scroll", () => {
     const section = document.querySelectorAll("section");
@@ -103,7 +117,34 @@ ScrollReveal({
     duration: 2500,
     delay: 100
 });
-    
+//form
+// Initialize EmailJS with your User ID
+emailjs.init("user_YOUR_USER_ID");
+
+// Function to send email using EmailJS
+function sendEmail(event) {
+    event.preventDefault();
+
+    // Get form data
+    const form = document.getElementById("contact-form");
+    const formData = new FormData(form);
+
+    // Send email
+    emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", formData)
+        .then(function(response) {
+            console.log("Email sent successfully:", response);
+            alert("Message sent successfully.");
+            form.reset(); // Reset the form after successful submission
+        }, function(error) {
+            console.error("Failed to send email:", error);
+            alert("Failed to send message. Please try again later.");
+        });
+}
+
+// Attach submit event listener to the form
+document.getElementById("contact-form").addEventListener("submit", sendEmail);
+
+
 //Target elements, and specify options to create reveal animations
 ScrollReveal().reveal('.home .info h2, .section-title-01, section-title-02', { delay: 500, origin: 'left' });
 ScrollReveal().reveal('.home .info h3, .home .info p, .about-info .btn', { delay: 600, origin:'right' });
